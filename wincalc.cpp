@@ -1,5 +1,6 @@
 #include "wincalc.h"
 #include "ui_wincalc.h"
+#include <cmath>
 
 // Values
 double calcValue    = 0;
@@ -38,7 +39,6 @@ WinCalc::WinCalc(QWidget *parent)
     connect(ui->btn_operator_mod, SIGNAL(released()), this, SLOT(operator_pressed()));
 
     // Initialize action buttons
-    connect(ui->btn_action_clear, SIGNAL(released()), this, SLOT(action_pressed()));
     connect(ui->btn_action_clear_entry, SIGNAL(released()), this, SLOT(action_pressed()));
     connect(ui->btn_action_backspace, SIGNAL(released()), this, SLOT(action_pressed()));
     connect(ui->btn_action_inv, SIGNAL(released()), this, SLOT(action_pressed()));
@@ -47,6 +47,7 @@ WinCalc::WinCalc(QWidget *parent)
     connect(ui->btn_action_sqrt, SIGNAL(released()), this, SLOT(action_pressed()));
 
     // Initialize unique buttons
+    connect(ui->btn_action_clear, SIGNAL(released()), this, SLOT(clear()));
     connect(ui->btn_action_equals, SIGNAL(released()), this, SLOT(calculate()));
 }
 
@@ -98,31 +99,26 @@ void WinCalc::operator_pressed()
     op_div = false;
     op_mod = false;
 
+    // Set trigger based on input
     if      (op.compare("+", Qt::CaseInsensitive) == 0) { op_add = true; }
     else if (op.compare("-", Qt::CaseInsensitive) == 0) { op_sub = true; }
     else if (op.compare("×", Qt::CaseInsensitive) == 0) { op_mul = true; }
     else if (op.compare("÷", Qt::CaseInsensitive) == 0) { op_div = true; }
     else if (op.compare("%", Qt::CaseInsensitive) == 0) { op_mod = true; }
 
-    calcValue = ui->display->text().toDouble();
-    ui->display->setText("");
+    // Only set once per calculation to allow for operator changes
+    if (ui->display->text().compare("", Qt::CaseInsensitive) != 0)
+    {
+        calcValue = ui->display->text().toDouble();
+        ui->display->setText("");
+    }
 }
 
 void WinCalc::action_pressed()
 {
     QString action = ((QPushButton *)sender())->text();
 
-    if (action.compare("C", Qt::CaseInsensitive) == 0)
-    {
-        calcValue = 0;
-        op_add     = false;
-        op_sub     = false;
-        op_mul     = false;
-        op_div     = false;
-        op_mod     = false;
-        ui->display->setText(QString::number(calcValue));
-    }
-    else if (action.compare("CE", Qt::CaseInsensitive) == 0)
+    if (action.compare("CE", Qt::CaseInsensitive) == 0)
     {
         ui->display->setText("");
     }
@@ -140,6 +136,17 @@ void WinCalc::action_pressed()
     // SQUARE ROOT
 }
 
+void WinCalc::clear()
+{
+    calcValue = 0;
+    op_add     = false;
+    op_sub     = false;
+    op_mul     = false;
+    op_div     = false;
+    op_mod     = false;
+    ui->display->setText(QString::number(calcValue));
+}
+
 void WinCalc::calculate()
 {
     if (buffOperand == 0)
@@ -151,7 +158,17 @@ void WinCalc::calculate()
     else if (op_sub) { calcValue -= buffOperand; }
     else if (op_mul) { calcValue *= buffOperand; }
     else if (op_div) { calcValue /= buffOperand; }
-    else if (op_mod) { calcValue  = (int)calcValue % (int)buffOperand; } // ENSURE ACCURACY
+    else if (op_mod)
+    {
+        double intTest;
+        if (modf(calcValue, &intTest) != 0 || modf(buffOperand, &intTest) != 0)
+        {
+            clear();
+            return;
+        }
+
+        calcValue = (int)calcValue % (int)buffOperand;
+    }
 
     ui->display->setText(QString::number(calcValue));
 }
