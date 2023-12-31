@@ -128,7 +128,7 @@ void WinCalc::operator_pressed()
     else if (op.compare("btn_operator_mod", Qt::CaseInsensitive) == 0) { op_mod = true; }
 
     // Only set once per calculation to allow for operator changes
-    if (ui->display->text().compare("", Qt::CaseInsensitive) != 0)
+    if (ui->display->text().compare("0", Qt::CaseInsensitive) != 0)
     {
         calcValue = ui->display->text().toDouble();
     }
