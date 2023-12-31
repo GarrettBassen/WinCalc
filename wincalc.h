@@ -24,6 +24,6 @@ private slots:
     void operand_pressed();
     void operator_pressed();
     void action_pressed();
-    //void clear();
+    void calculate();
 };
 #endif // WINCALC_H

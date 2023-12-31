@@ -1,7 +1,9 @@
 #include "wincalc.h"
 #include "ui_wincalc.h"
 
-double calcValue = 0;
+// Values
+double calcValue    = 0;
+double buffOperand  = 0;
 
 // Triggers
 bool op_add     = false; // Add
@@ -9,12 +11,6 @@ bool op_sub     = false; // Subtract
 bool op_mul     = false; // Multiply
 bool op_div     = false; // Divide
 bool op_mod     = false; // Modulo
-bool ac_equ     = false; // Equals
-bool ac_clr     = false; // Clear
-bool ac_clr_e   = false; // Clear Entry
-bool ac_back    = false; // Backspace
-bool ac_inv     = false; // Inverse
-bool ac_sign    = false; // Sign change
 
 WinCalc::WinCalc(QWidget *parent)
     : QMainWindow(parent)
@@ -45,11 +41,13 @@ WinCalc::WinCalc(QWidget *parent)
     connect(ui->btn_action_clear, SIGNAL(released()), this, SLOT(action_pressed()));
     connect(ui->btn_action_clear_entry, SIGNAL(released()), this, SLOT(action_pressed()));
     connect(ui->btn_action_backspace, SIGNAL(released()), this, SLOT(action_pressed()));
-    connect(ui->btn_action_equals, SIGNAL(released()), this, SLOT(action_pressed()));
     connect(ui->btn_action_inv, SIGNAL(released()), this, SLOT(action_pressed()));
     connect(ui->btn_action_sign, SIGNAL(released()), this, SLOT(action_pressed()));
     connect(ui->btn_action_sqrd, SIGNAL(released()), this, SLOT(action_pressed()));
     connect(ui->btn_action_sqrt, SIGNAL(released()), this, SLOT(action_pressed()));
+
+    // Initialize unique buttons
+    connect(ui->btn_action_equals, SIGNAL(released()), this, SLOT(calculate()));
 }
 
 WinCalc::~WinCalc()
@@ -57,18 +55,34 @@ WinCalc::~WinCalc()
     delete ui;
 }
 
+// Manage operand buttons
 void WinCalc::operand_pressed()
 {
     QString displayStr = ui->display->text();
-    QPushButton *btn = (QPushButton *)sender();
+    QString operand = ((QPushButton *)sender())->text();
 
-    if (displayStr == "0")
+    if (operand.compare(".", Qt::CaseInsensitive) == 0)
     {
-        ui->display->setText(btn->text());
+        if (displayStr.compare("0", Qt::CaseInsensitive) == 0)
+        {
+            ui->display->setText("0.");
+        }
+        else if (displayStr.contains(".", Qt::CaseInsensitive)) {} // Do nothing
+        else
+        {
+            ui->display->setText(displayStr.append(operand));
+        }
     }
     else
     {
-        ui->display->setText(displayStr.append(btn->text()));
+        if (displayStr == "0")
+        {
+            ui->display->setText(operand);
+        }
+        else
+        {
+            ui->display->setText(displayStr.append(operand));
+        }
     }
 }
 
@@ -76,17 +90,22 @@ void WinCalc::operator_pressed()
 {
     QString op = ((QPushButton *)sender())->text();
 
-    /*if (op.compare("+", Qt::CaseInsensitive))
-    {
+    // Reset triggers and buffer
+    buffOperand = 0;
+    op_add = false;
+    op_sub = false;
+    op_mul = false;
+    op_div = false;
+    op_mod = false;
 
-    }*/
+    if      (op.compare("+", Qt::CaseInsensitive) == 0) { op_add = true; }
+    else if (op.compare("-", Qt::CaseInsensitive) == 0) { op_sub = true; }
+    else if (op.compare("×", Qt::CaseInsensitive) == 0) { op_mul = true; }
+    else if (op.compare("÷", Qt::CaseInsensitive) == 0) { op_div = true; }
+    else if (op.compare("%", Qt::CaseInsensitive) == 0) { op_mod = true; }
 
-    // TODO
-    // +
-    // -
-    // *
-    // /
-    // %
+    calcValue = ui->display->text().toDouble();
+    ui->display->setText("");
 }
 
 void WinCalc::action_pressed()
@@ -101,12 +120,6 @@ void WinCalc::action_pressed()
         op_mul     = false;
         op_div     = false;
         op_mod     = false;
-        ac_equ     = false;
-        ac_clr     = false;
-        ac_clr_e   = false;
-        ac_back    = false;
-        ac_inv     = false;
-        ac_sign    = false;
         ui->display->setText(QString::number(calcValue));
     }
     else if (action.compare("CE", Qt::CaseInsensitive) == 0)
@@ -121,9 +134,24 @@ void WinCalc::action_pressed()
     }
 
     // TODO
-    // EQUALS SIGN
     // INV
     // SIGN CHANGE
     // SQUARED
     // SQUARE ROOT
+}
+
+void WinCalc::calculate()
+{
+    if (buffOperand == 0)
+    {
+        buffOperand = ui->display->text().toDouble();
+    }
+
+    if      (op_add) { calcValue += buffOperand; }
+    else if (op_sub) { calcValue -= buffOperand; }
+    else if (op_mul) { calcValue *= buffOperand; }
+    else if (op_div) { calcValue /= buffOperand; }
+    else if (op_mod) { calcValue  = (int)calcValue % (int)buffOperand; } // ENSURE ACCURACY
+
+    ui->display->setText(QString::number(calcValue));
 }
