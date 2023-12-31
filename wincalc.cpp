@@ -143,7 +143,7 @@ void WinCalc::action_pressed()
 
     if (action.compare("btn_action_clear_entry", Qt::CaseInsensitive) == 0)
     {
-        buffOperand == 0 ? ui->display->setText("") : clear();
+        buffOperand == 0 ? ui->display->setText("0") : clear();
     }
     else if (action.compare("btn_action_backspace", Qt::CaseInsensitive) == 0)
     {
