@@ -26,6 +26,7 @@ private slots:
     void action_pressed();
     void calculate();
     void clear();
+    void clear_triggers();
     void set_display_small();
     // TODO : MEMORY BUTTONS
 };
