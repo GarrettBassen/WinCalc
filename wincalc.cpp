@@ -74,10 +74,56 @@ void WinCalc::operand_pressed()
 
 void WinCalc::operator_pressed()
 {
-    ui->display->setText("DEBUG OPERATOR");
+    QString op = ((QPushButton *)sender())->text();
+
+    /*if (op.compare("+", Qt::CaseInsensitive))
+    {
+
+    }*/
+
+    // TODO
+    // +
+    // -
+    // *
+    // /
+    // %
 }
 
 void WinCalc::action_pressed()
 {
-    ui->display->setText("DEBUG ACTION");
+    QString action = ((QPushButton *)sender())->text();
+
+    if (action.compare("C", Qt::CaseInsensitive) == 0)
+    {
+        calcValue = 0;
+        op_add     = false;
+        op_sub     = false;
+        op_mul     = false;
+        op_div     = false;
+        op_mod     = false;
+        ac_equ     = false;
+        ac_clr     = false;
+        ac_clr_e   = false;
+        ac_back    = false;
+        ac_inv     = false;
+        ac_sign    = false;
+        ui->display->setText(QString::number(calcValue));
+    }
+    else if (action.compare("CE", Qt::CaseInsensitive) == 0)
+    {
+        ui->display->setText("");
+    }
+    else if (action.compare("←", Qt::CaseInsensitive) == 0)
+    {
+        QString currValue = ui->display->text();
+        currValue.chop(1);
+        currValue.isEmpty() ? ui->display->setText("0") : ui->display->setText(currValue);
+    }
+
+    // TODO
+    // EQUALS SIGN
+    // INV
+    // SIGN CHANGE
+    // SQUARED
+    // SQUARE ROOT
 }
