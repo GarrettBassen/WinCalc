@@ -23,6 +23,7 @@ bool ac_inv     = false; // 1/x
 WinCalc::WinCalc(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::WinCalc)
+    , memStack()
 {
     ui->setupUi(this);
 
@@ -56,6 +57,19 @@ WinCalc::WinCalc(QWidget *parent)
     // Initialize unique buttons
     connect(ui->btn_action_clear, SIGNAL(released()), this, SLOT(clear()));
     connect(ui->btn_action_equals, SIGNAL(released()), this, SLOT(calculate()));
+
+    // Initialize memory buttons
+    connect(ui->btn_mem_add, SIGNAL(released()), this, SLOT(memory()));
+    connect(ui->btn_mem_sub, SIGNAL(released()), this, SLOT(memory()));
+    connect(ui->btn_mem_clear, SIGNAL(released()), this, SLOT(memory()));
+    connect(ui->btn_mem_recall, SIGNAL(released()), this, SLOT(memory()));
+    connect(ui->btn_mem_store, SIGNAL(released()), this, SLOT(memory()));
+    connect(ui->btn_mem_view, SIGNAL(released()), this, SLOT(memory()));
+
+    // Disable unsafe memory buttons
+    ui->btn_mem_clear->setDisabled(true);
+    ui->btn_mem_recall->setDisabled(true);
+    ui->btn_mem_view->setDisabled(true);
 }
 
 WinCalc::~WinCalc()
@@ -238,5 +252,62 @@ void WinCalc::set_display_small()
         else if (ac_sqrd) { ui->display_small->setText("sqr(" + QString::number(buffOperand) + ")"); }
         else if (ac_sqrt) { ui->display_small->setText("sqrt(" + QString::number(buffOperand) + ")"); }
         else if (ac_inv)  { ui->display_small->setText("1/(" + QString::number(buffOperand) + ")"); }
+    }
+}
+
+void WinCalc::memory()
+{
+    QString action = ((QPushButton *)sender())->objectName();
+
+    if (action.compare("btn_mem_store", Qt::CaseInsensitive) == 0)
+    {
+        memStack.push_front(ui->display->text().toDouble());
+    }
+    else if (action.compare("btn_mem_add", Qt::CaseInsensitive) == 0)
+    {
+        if (memStack.isEmpty())
+        {
+            memStack.push_front(ui->display->text().toDouble());
+        }
+        else
+        {
+            memStack.front() += ui->display->text().toDouble();
+        }
+    }
+    else if (action.compare("btn_mem_sub", Qt::CaseInsensitive) == 0)
+    {
+        if (memStack.isEmpty())
+        {
+            memStack.push_front(ui->display->text().toDouble());
+        }
+        else
+        {
+            memStack.front() -= ui->display->text().toDouble();
+        }
+    }
+    else if (action.compare("btn_mem_recall", Qt::CaseInsensitive) == 0)
+    {
+        clear();
+        calcValue = memStack.front();
+        ui->display->setText(QString::number(calcValue));
+    }
+    else if (action.compare("btn_mem_clear", Qt::CaseInsensitive) == 0)
+    {
+        memStack.pop_front();
+    }
+
+    // view
+
+    if (memStack.isEmpty())
+    {
+        ui->btn_mem_clear->setDisabled(true);
+        ui->btn_mem_recall->setDisabled(true);
+        ui->btn_mem_view->setDisabled(true);
+    }
+    else
+    {
+        ui->btn_mem_clear->setDisabled(false);
+        ui->btn_mem_recall->setDisabled(false);
+        ui->btn_mem_view->setDisabled(false);
     }
 }

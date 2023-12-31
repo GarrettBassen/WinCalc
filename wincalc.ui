@@ -149,6 +149,44 @@
            <property name="verticalSpacing">
             <number>6</number>
            </property>
+           <item row="0" column="5">
+            <widget class="QPushButton" name="btn_mem_view">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: rgb(240, 240, 240);
+	border: none;
+	border-radius: 4px;
+}
+
+QPushButton:hover {
+	background-color: rgb(234, 234, 234);
+}
+
+QPushButton:pressed {
+	background-color: rgb(227, 227, 227);
+	color: rgb(138, 138, 138);
+}
+
+QPushButton:disabled  {
+	color: rgb(202, 202, 202);
+}
+
+QPushButton:disabled:hover  {
+	color: rgb(202, 202, 202);
+	background-color: rgb(240, 240, 240);
+}</string>
+             </property>
+             <property name="text">
+              <string>M⌄</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="1">
             <widget class="QPushButton" name="btn_mem_recall">
              <property name="sizePolicy">
@@ -163,6 +201,9 @@
                <height>40</height>
               </size>
              </property>
+             <property name="toolTip">
+              <string>Memory recall</string>
+             </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
 	background-color: rgb(240, 240, 240);
@@ -177,115 +218,19 @@ QPushButton:hover {
 QPushButton:pressed {
 	background-color: rgb(227, 227, 227);
 	color: rgb(138, 138, 138);
+}
+
+QPushButton:disabled  {
+	color: rgb(202, 202, 202);
+}
+
+QPushButton:disabled:hover  {
+	color: rgb(202, 202, 202);
+	background-color: rgb(240, 240, 240);
 }</string>
              </property>
              <property name="text">
               <string>MR</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="5">
-            <widget class="QPushButton" name="btn_mem_view">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton {
-	background-color: rgb(240, 240, 240);
-	border: none;
-	border-radius: 4px;
-}
-
-QPushButton:hover {
-	background-color: rgb(234, 234, 234);
-}
-
-QPushButton:pressed {
-	background-color: rgb(227, 227, 227);
-	color: rgb(138, 138, 138);
-}</string>
-             </property>
-             <property name="text">
-              <string>M⌄</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QPushButton" name="btn_mem_clear">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton {
-	background-color: rgb(240, 240, 240);
-	border: none;
-	border-radius: 4px;
-}
-
-QPushButton:hover {
-	background-color: rgb(234, 234, 234);
-}
-
-QPushButton:pressed {
-	background-color: rgb(227, 227, 227);
-	color: rgb(138, 138, 138);
-}</string>
-             </property>
-             <property name="text">
-              <string>MC</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QPushButton" name="btn_mem_add">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton {
-	background-color: rgb(240, 240, 240);
-	border: none;
-	border-radius: 4px;
-}
-
-QPushButton:hover {
-	background-color: rgb(234, 234, 234);
-}
-
-QPushButton:pressed {
-	background-color: rgb(227, 227, 227);
-	color: rgb(138, 138, 138);
-}</string>
-             </property>
-             <property name="text">
-              <string>M+</string>
              </property>
             </widget>
            </item>
@@ -302,6 +247,9 @@ QPushButton:pressed {
                <width>0</width>
                <height>40</height>
               </size>
+             </property>
+             <property name="toolTip">
+              <string>Memory subtract</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
@@ -324,6 +272,91 @@ QPushButton:pressed {
              </property>
             </widget>
            </item>
+           <item row="0" column="2">
+            <widget class="QPushButton" name="btn_mem_add">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Memory add</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: rgb(240, 240, 240);
+	border: none;
+	border-radius: 4px;
+}
+
+QPushButton:hover {
+	background-color: rgb(234, 234, 234);
+}
+
+QPushButton:pressed {
+	background-color: rgb(227, 227, 227);
+	color: rgb(138, 138, 138);
+}</string>
+             </property>
+             <property name="text">
+              <string>M+</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="btn_mem_clear">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Memory clear (most recent value)</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: rgb(240, 240, 240);
+	border: none;
+	border-radius: 4px;
+}
+
+QPushButton:hover {
+	background-color: rgb(234, 234, 234);
+}
+
+QPushButton:pressed {
+	background-color: rgb(227, 227, 227);
+	color: rgb(138, 138, 138);
+}
+
+QPushButton:disabled  {
+	color: rgb(202, 202, 202);
+}
+
+QPushButton:disabled:hover  {
+	color: rgb(202, 202, 202);
+	background-color: rgb(240, 240, 240);
+}</string>
+             </property>
+             <property name="text">
+              <string>MC</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="4">
             <widget class="QPushButton" name="btn_mem_store">
              <property name="sizePolicy">
@@ -337,6 +370,9 @@ QPushButton:pressed {
                <width>0</width>
                <height>40</height>
               </size>
+             </property>
+             <property name="toolTip">
+              <string>Memory store</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {

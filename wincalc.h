@@ -19,6 +19,7 @@ public:
 
 private:
     Ui::WinCalc *ui;
+    QVector<double> memStack;
 
 private slots:
     void operand_pressed();
@@ -28,6 +29,6 @@ private slots:
     void clear();
     void clear_triggers();
     void set_display_small();
-    // TODO : MEMORY BUTTONS
+    void memory();
 };
 #endif // WINCALC_H
