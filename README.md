@@ -1,11 +1,10 @@
 # WinCalc
-Windows calculator clone in Qt using C++
+WinCalc is a clone of the Windows calculator application using Qt and C++ as part of an independent learning project.
 
-![Demo gif](assets/demo.gif)
 ![Demo image](assets/demo.png)
 
-### Images
-WinCalc is a clone of the Windows calculator application as part of an independent learning project.
+### Demo
+![Demo gif](assets/demo.gif)
 
 # Features Coming
 <ul>
