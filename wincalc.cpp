@@ -65,6 +65,12 @@ void WinCalc::operand_pressed()
     QString displayStr = ui->display->text();
     QString operand = ((QPushButton *)sender())->text();
 
+    if (override)
+    {
+        displayStr = "0";
+        override = false;
+    }
+
     if (operand.compare(".", Qt::CaseInsensitive) == 0)
     {
         if (displayStr.compare("0", Qt::CaseInsensitive) == 0)
@@ -113,7 +119,6 @@ void WinCalc::operator_pressed()
     if (ui->display->text().compare("", Qt::CaseInsensitive) != 0)
     {
         calcValue = ui->display->text().toDouble();
-        ui->display->setText("");
     }
 
     override = true;
