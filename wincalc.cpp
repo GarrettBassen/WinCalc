@@ -6,6 +6,9 @@
 double calcValue    = 0;
 double buffOperand  = 0;
 
+// Special buttons
+bool override = false;
+
 // Triggers
 bool op_add     = false; // Add
 bool op_sub     = false; // Subtract
@@ -89,7 +92,7 @@ void WinCalc::operand_pressed()
 
 void WinCalc::operator_pressed()
 {
-    QString op = ((QPushButton *)sender())->text();
+    QString op = ((QPushButton *)sender())->objectName();
 
     // Reset triggers and buffer
     buffOperand = 0;
@@ -100,11 +103,11 @@ void WinCalc::operator_pressed()
     op_mod = false;
 
     // Set trigger based on input
-    if      (op.compare("+", Qt::CaseInsensitive) == 0) { op_add = true; }
-    else if (op.compare("-", Qt::CaseInsensitive) == 0) { op_sub = true; }
-    else if (op.compare("×", Qt::CaseInsensitive) == 0) { op_mul = true; }
-    else if (op.compare("÷", Qt::CaseInsensitive) == 0) { op_div = true; }
-    else if (op.compare("%", Qt::CaseInsensitive) == 0) { op_mod = true; }
+    if      (op.compare("btn_operator_add", Qt::CaseInsensitive) == 0) { op_add = true; }
+    else if (op.compare("btn_operator_sub", Qt::CaseInsensitive) == 0) { op_sub = true; }
+    else if (op.compare("btn_operator_mul", Qt::CaseInsensitive) == 0) { op_mul = true; }
+    else if (op.compare("btn_operator_div", Qt::CaseInsensitive) == 0) { op_div = true; }
+    else if (op.compare("btn_operator_mod", Qt::CaseInsensitive) == 0) { op_mod = true; }
 
     // Only set once per calculation to allow for operator changes
     if (ui->display->text().compare("", Qt::CaseInsensitive) != 0)
@@ -112,39 +115,54 @@ void WinCalc::operator_pressed()
         calcValue = ui->display->text().toDouble();
         ui->display->setText("");
     }
+
+    override = true;
+    set_display_small();
 }
 
 void WinCalc::action_pressed()
 {
-    QString action = ((QPushButton *)sender())->text();
+    QString action = ((QPushButton *)sender())->objectName();
 
-    if (action.compare("CE", Qt::CaseInsensitive) == 0)
+    if (action.compare("btn_action_clear_entry", Qt::CaseInsensitive) == 0)
     {
-        ui->display->setText("");
+        buffOperand == 0 ? ui->display->setText("") : clear();
     }
-    else if (action.compare("←", Qt::CaseInsensitive) == 0)
+    else if (action.compare("btn_action_backspace", Qt::CaseInsensitive) == 0)
     {
         QString currValue = ui->display->text();
         currValue.chop(1);
         currValue.isEmpty() ? ui->display->setText("0") : ui->display->setText(currValue);
     }
+    else if (action.compare("btn_action_sqrd", Qt::CaseInsensitive) == 0)
+    {
 
-    // TODO
-    // INV
-    // SIGN CHANGE
-    // SQUARED
-    // SQUARE ROOT
+    }
+    else if (action.compare("btn_action_sqrt", Qt::CaseInsensitive) == 0)
+    {
+
+    }
+    else if (action.compare("btn_action_sign", Qt::CaseInsensitive) == 0)
+    {
+
+    }
+    else if (action.compare("btn_action_inv", Qt::CaseInsensitive) == 0)
+    {
+
+    }
 }
 
 void WinCalc::clear()
 {
     calcValue = 0;
+    override = false;
     op_add     = false;
     op_sub     = false;
     op_mul     = false;
     op_div     = false;
     op_mod     = false;
     ui->display->setText(QString::number(calcValue));
+    ui->display_small->setText("");
 }
 
 void WinCalc::calculate()
@@ -153,6 +171,8 @@ void WinCalc::calculate()
     {
         buffOperand = ui->display->text().toDouble();
     }
+
+    set_display_small();
 
     if      (op_add) { calcValue += buffOperand; }
     else if (op_sub) { calcValue -= buffOperand; }
@@ -171,4 +191,24 @@ void WinCalc::calculate()
     }
 
     ui->display->setText(QString::number(calcValue));
+}
+
+void WinCalc::set_display_small()
+{
+    if (buffOperand == 0)
+    {
+        if      (op_add) { ui->display_small->setText(QString::number(calcValue) + " + "); }
+        else if (op_sub) { ui->display_small->setText(QString::number(calcValue) + " - "); }
+        else if (op_mul) { ui->display_small->setText(QString::number(calcValue) + " × "); }
+        else if (op_div) { ui->display_small->setText(QString::number(calcValue) + " ÷ "); }
+        else if (op_mod) { ui->display_small->setText(QString::number(calcValue) + " % "); }
+    }
+    else
+    {
+        if      (op_add) { ui->display_small->setText(QString::number(calcValue) + " + " + QString::number(buffOperand) + " ="); }
+        else if (op_sub) { ui->display_small->setText(QString::number(calcValue) + " - " + QString::number(buffOperand) + " ="); }
+        else if (op_mul) { ui->display_small->setText(QString::number(calcValue) + " × " + QString::number(buffOperand) + " ="); }
+        else if (op_div) { ui->display_small->setText(QString::number(calcValue) + " ÷ " + QString::number(buffOperand) + " ="); }
+        else if (op_mod) { ui->display_small->setText(QString::number(calcValue) + " % " + QString::number(buffOperand) + " ="); }
+    }
 }

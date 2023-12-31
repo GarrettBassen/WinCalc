@@ -69,6 +69,26 @@
         <number>2</number>
        </property>
        <item>
+        <widget class="QLabel" name="display_small">
+         <property name="font">
+          <font>
+           <family>Microsoft Tai Le</family>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+	color: rgb(97, 97, 97);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="display">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -79,14 +99,15 @@
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>160</height>
+           <height>120</height>
           </size>
          </property>
          <property name="font">
           <font>
-           <family>Segoe UI</family>
-           <pointsize>48</pointsize>
+           <family>Microsoft Tai Le</family>
+           <pointsize>50</pointsize>
            <bold>true</bold>
+           <stylestrategy>PreferDefault</stylestrategy>
           </font>
          </property>
          <property name="text">

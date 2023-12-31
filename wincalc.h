@@ -26,5 +26,7 @@ private slots:
     void action_pressed();
     void calculate();
     void clear();
+    void set_display_small();
+    // TODO : MEMORY BUTTONS
 };
 #endif // WINCALC_H
