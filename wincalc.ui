@@ -150,12 +150,15 @@
             <number>6</number>
            </property>
            <item row="0" column="5">
-            <widget class="QPushButton" name="btn_mem_view">
+            <widget class="QPushButton" name="btn_mem_remove">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Remove recent memory</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
@@ -183,7 +186,7 @@ QPushButton:disabled:hover  {
 }</string>
              </property>
              <property name="text">
-              <string>M⌄</string>
+              <string>MR</string>
              </property>
             </widget>
            </item>
@@ -325,7 +328,7 @@ QPushButton:pressed {
               </size>
              </property>
              <property name="toolTip">
-              <string>Memory clear (most recent value)</string>
+              <string>Memory clear all</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {

@@ -23,7 +23,7 @@ bool ac_inv     = false; // 1/x
 WinCalc::WinCalc(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::WinCalc)
-    , memStack()
+    , memList()
 {
     ui->setupUi(this);
 
@@ -64,12 +64,12 @@ WinCalc::WinCalc(QWidget *parent)
     connect(ui->btn_mem_clear, SIGNAL(released()), this, SLOT(memory()));
     connect(ui->btn_mem_recall, SIGNAL(released()), this, SLOT(memory()));
     connect(ui->btn_mem_store, SIGNAL(released()), this, SLOT(memory()));
-    connect(ui->btn_mem_view, SIGNAL(released()), this, SLOT(memory()));
+    connect(ui->btn_mem_remove, SIGNAL(released()), this, SLOT(memory()));
 
     // Disable unsafe memory buttons
     ui->btn_mem_clear->setDisabled(true);
     ui->btn_mem_recall->setDisabled(true);
-    ui->btn_mem_view->setDisabled(true);
+    ui->btn_mem_remove->setDisabled(true);
 }
 
 WinCalc::~WinCalc()
@@ -261,53 +261,55 @@ void WinCalc::memory()
 
     if (action.compare("btn_mem_store", Qt::CaseInsensitive) == 0)
     {
-        memStack.push_front(ui->display->text().toDouble());
+        memList.append(ui->display->text().toDouble());
     }
     else if (action.compare("btn_mem_add", Qt::CaseInsensitive) == 0)
     {
-        if (memStack.isEmpty())
+        if (memList.isEmpty())
         {
-            memStack.push_front(ui->display->text().toDouble());
+            memList.append(ui->display->text().toDouble());
         }
         else
         {
-            memStack.front() += ui->display->text().toDouble();
+            memList.front() += ui->display->text().toDouble();
         }
     }
     else if (action.compare("btn_mem_sub", Qt::CaseInsensitive) == 0)
     {
-        if (memStack.isEmpty())
+        if (memList.isEmpty())
         {
-            memStack.push_front(ui->display->text().toDouble());
+            memList.append(ui->display->text().toDouble());
         }
         else
         {
-            memStack.front() -= ui->display->text().toDouble();
+            memList.front() -= ui->display->text().toDouble();
         }
     }
     else if (action.compare("btn_mem_recall", Qt::CaseInsensitive) == 0)
     {
         clear();
-        calcValue = memStack.front();
+        calcValue = memList.front();
         ui->display->setText(QString::number(calcValue));
     }
     else if (action.compare("btn_mem_clear", Qt::CaseInsensitive) == 0)
     {
-        memStack.pop_front();
+        memList.clear();
+    }
+    else if (action.compare("btn_mem_remove", Qt::CaseInsensitive) == 0)
+    {
+        memList.pop_front();
     }
 
-    // view
-
-    if (memStack.isEmpty())
+    if (memList.isEmpty())
     {
         ui->btn_mem_clear->setDisabled(true);
         ui->btn_mem_recall->setDisabled(true);
-        ui->btn_mem_view->setDisabled(true);
+        ui->btn_mem_remove->setDisabled(true);
     }
     else
     {
         ui->btn_mem_clear->setDisabled(false);
         ui->btn_mem_recall->setDisabled(false);
-        ui->btn_mem_view->setDisabled(false);
+        ui->btn_mem_remove->setDisabled(false);
     }
 }

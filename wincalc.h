@@ -19,7 +19,7 @@ public:
 
 private:
     Ui::WinCalc *ui;
-    QVector<double> memStack;
+    QList<double> memList;
 
 private slots:
     void operand_pressed();
