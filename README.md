@@ -2,9 +2,10 @@
 <h3 align="center">WinCalc is a clone of the Windows calculator application using Qt and C++</h3>
 
 <p align="center">
- <img src="assets/demo.png" alt="Demo image">
+ <img src="git_assets/demo.png" alt="Demo image">
 </p>
 
+<div>
 <h2>Features</h2>
  <p>WinCalc currently supports the following mathematical operations:</p>
   <ul>
@@ -18,13 +19,10 @@
    <li>sqrt(x)</li>
    <li>sqr(x)</li>
   </ul>
+ <img src="git_assets/demo_calc.gif" alt="Calculation demo gif" width="254" height="420">
+</div>
 
-<h2></h2>
-<p align="center">
- <img src="assets/demo_calc.gif" alt="Calculation demo gif">
- <img src="assets/demo_mem.gif" alt="Memory demo gif">
-</p>
-
+<div>
 <h2>Memory</h2>
  <p>Memory functions available:</p>
   <ul>
@@ -35,6 +33,8 @@
    <li>Remove recent memory</li>
    <li>Clear all memory</li>
   </ul>
+ <img src="git_assets/demo_mem.gif" alt="Memory demo gif" width="254" height="420">
+</div>
 
 # Features Coming
 <ul>
