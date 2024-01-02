@@ -27,8 +27,10 @@ private slots:
     void action_pressed();
     void calculate();
     void clear();
-    void clear_triggers();
-    void set_display_small();
     void memory();
+
+private:
+    void set_display_small();
+    void clear_triggers();
 };
 #endif // WINCALC_H
