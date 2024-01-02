@@ -90,13 +90,24 @@
          <property name="styleSheet">
           <string notr="true">QLabel {
 	color: rgb(97, 97, 97);
+	margin-right: 6px;
+	margin-bottom: 0px;
 }</string>
          </property>
+         <property name="midLineWidth">
+          <number>0</number>
+         </property>
          <property name="text">
-          <string/>
+          <string>tmp =</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <property name="indent">
+          <number>-1</number>
          </property>
         </widget>
        </item>
@@ -107,6 +118,12 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
          </property>
          <property name="maximumSize">
           <size>

@@ -28,6 +28,7 @@ WinCalc::WinCalc(QWidget *parent)
     ui->setupUi(this);
 
     ui->display->setText(QString::number(calcValue));
+    ui->display_small->setText("");
 
     // Initialize operand buttons
     QString name = "btn_operand_dot";
